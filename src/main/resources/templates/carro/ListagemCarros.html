@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+	
+<head>
+	<title>Listagem de carros</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>
+						Listagem de carros
+					</h1>
+				</div>
+			
+				<div class="col-xs-2">
+					<div class="aw-page-header-controls">
+						<a class="btn btn-primary" th:href="@{/carros/novo}">
+							<i class="fa  fa-plus-circle"></i> <span class="hidden-xs  hidden-sm">Novo Carro</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="table-responsive">
+			<table id="tabela-produtos" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+				<thead class="aw-table-header-solid">
+					<tr>
+						<th>Código</th>
+						<th>Marca</th>
+						<th>Modelo</th>
+						<th>Ano</th>
+						<th>Valor</th>
+						<th>Tipo</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="carro : ${carros}">
+						<td th:text="${carro.codigo}">1</td>
+						<td><a th:href="@{/carros/{codigo}(codigo=${carro.codigo})}" th:text="${carro.marca}">Fiat</a></td>
+						<td th:text="${carro.modelo}">Uno</td>
+						<td th:text="${carro.ano}">2012</td>
+						<td th:text="${carro.valor}">R$17.000,00</td>
+						<td th:text="${carro.tipo.descricao}">Basico</td>
+					</tr>
+					   <tr th:if="${carros.empty}"> 
+					     <td colspan="6">Nenhum carro cadastrado</td>
+					   
+					   </tr>
+					
+					</tbody>
+
+			</table>
+		</div>
+			
+		
+	</div>
+
+</section>
+</body>
+</html>

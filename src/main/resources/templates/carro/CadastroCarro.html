@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao">
+	
+<head>
+	<title>Cadastro de carro</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>
+				Cadastro de carros
+			</h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+	
+	<div class="alert  alert-success  alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}">
+			<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+			<span th:text="${mensagem}"></span>
+			  
+		</div>
+	
+		<form method="POST" th:object="${carro}" class="form-vertical  js-form-loading" th:action="@{/carros/novo} ">
+		
+		<div class="alert  alert-danger  alert-dismissible" role="alert" th:if="${#fields.hasAnyErrors()}">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <th:block th:each="erro : ${#fields.detailedErrors()}">
+			   <div>
+			<i class="fa  fa-exclamation-circle"></i> 
+			<span th:text="${erro.message}"></span>
+			 </div>
+			</th:block>
+		</div>
+			
+			<div class="form-group" th:classappend="${#fields.hasErrors('marca')} ? has-error" >
+				<label for="marca" class="control-label">Marca</label>
+				<input id="marca" type="text" class="form-control" th:field="*{marca}"/>
+			</div>
+	
+			<div class="row">
+				<div class="col-sm-6 form-group" th:classappend="${#fields.hasErrors('modelo')} ? has-error">
+					<div class="form-group">
+						<label for="modelo" class="control-label">Modelo</label>
+						<input id="modelo" type="text" class="form-control" th:field="*{modelo}"/>
+					</div>
+				</div>
+				
+				<div class="col-sm-6 form-group" th:classappend="${#fields.hasErrors('tipo')} ? has-error">
+					<div class="form-group">
+						<label for="tipo" class="control-label">Tipo</label>
+						<select id="tipo" class="form-control" th:field="*{tipo}">
+						   <option value="">Selecione o tipo</option>
+						   <option th:each="tipo: ${tipos}" th:value="${tipo}" th:text="${tipo.descricao}"></option>
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-6 form-group" th:classappend="${#fields.hasErrors('ano')} ? has-error">
+					<div class="form-group">
+						<label for="ano" class="control-label">Ano</label>
+						<input id="ano" type="text" class="form-control" th:field="*{ano}"/>
+					</div>
+				</div>
+				
+				<div class="col-sm-6 form-group" th:classappend="${#fields.hasErrors('valor')} ? has-error">
+					<div class="form-group">
+						<label for="valor" class="control-label">Valor</label>
+						<input id="valor" type="text" class="form-control" th:field="*{valor}"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Salvar</button>
+		
+			</div>
+	
+		</form>
+	</div>
+
+</section>
+</body>
+</html>
